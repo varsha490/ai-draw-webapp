@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Draw | AI Powered</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- MediaPipe Hands CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <!-- How to Play Modal Overlay -->
+    <div id="welcome-modal-overlay" class="modal-overlay">
+        <div class="modal-content">
+            <h2>How to Play</h2>
+            <div class="instructions-grid">
+                <div class="instruction-card" id="card-draw">
+                    <span class="emoji">✍️</span>
+                    <h3>Draw</h3>
+                    <p>Point index finger to draw</p>
+                </div>
+                <div class="instruction-card" id="card-move">
+                    <span class="emoji">👆</span>
+                    <h3>Move</h3>
+                    <p>Use two fingers to move (no drawing)</p>
+                </div>
+                <div class="instruction-card" id="card-erase">
+                    <span class="emoji">🖐️</span>
+                    <h3>Erase</h3>
+                    <p>Show open hand to clear</p>
+                </div>
+                <div class="instruction-card" id="card-idle">
+                    <span class="emoji">✊</span>
+                    <h3>Idle</h3>
+                    <p>Close fist to pause</p>
+                </div>
+            </div>
+            <button id="start-btn" class="start-button">Let's Go!</button>
+        </div>
+    </div>
+
+    <!-- Main Canvas interface container -->
+    <div class="app-container">
+        <!-- Main video and canvas overlay -->
+        <div class="canvas-wrapper">
+            <video class="input_video" autoplay playsinline></video>
+            <canvas class="output_canvas"></canvas>
+            
+            <!-- Loading overlay (triggered while models initialize after camera request) -->
+            <div id="loading" class="loading-overlay">
+                <div class="spinner"></div>
+                <p>Initializing MediaPipe Hands...</p>
+                <p style="font-size: 12px; color: #94a3b8; margin-top: 10px;">Please allow camera access</p>
+            </div>
+        </div>
+
+        <!-- Controls panel in glassmorphism -->
+        <div class="controls-panel">
+            <h1 class="title">Air Draw</h1>
+            <p class="subtitle">Follow the gesture guide below</p>
+
+            <div class="color-picker-container">
+                <p>Select Color</p>
+                <div class="colors">
+                    <button class="color-btn active" data-color="#ff3366" style="background-color: #ff3366;"></button>
+                    <button class="color-btn" data-color="#33ccff" style="background-color: #33ccff;"></button>
+                    <button class="color-btn" data-color="#00ff66" style="background-color: #00ff66;"></button>
+                    <button class="color-btn" data-color="#ffcc00" style="background-color: #ffcc00;"></button>
+                    <button class="color-btn" data-color="#ffffff" style="background-color: #ffffff;"></button>
+                </div>
+            </div>
+
+            <button id="clear-btn" class="action-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
+                Clear Canvas
+            </button>
+        </div>
+
+        <!-- Reference Gesture Guide Panel inside app -->
+        <div class="gesture-guide">
+            <div class="gesture-item" id="gesture-draw">
+                <span class="icon">✍️</span>
+                <span>One finger → Draw</span>
+            </div>
+            <div class="gesture-item" id="gesture-move">
+                <span class="icon">👆</span>
+                <span>Two fingers → Move</span>
+            </div>
+            <div class="gesture-item" id="gesture-clear">
+                <span class="icon">🖐️</span>
+                <span>Open hand → Clear</span>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
